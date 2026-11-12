@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 225" role="img" aria-label="Perbandingan berat mangga 1 kg 200 g dan melon 1.800 g pada timbangan digital">
+  <rect width="560" height="225" rx="16" fill="#f8fafc"/>
+
+  <!-- Left Side: Mangga (1 kg 200 g) -->
+  <g transform="translate(26, 18)">
+    <rect width="242" height="190" rx="18" fill="#ffffff" stroke="#e2e8f0" stroke-width="2.5"/>
+    <!-- Two Mangoes -->
+    <ellipse cx="102" cy="68" rx="34" ry="24" fill="#facc15" stroke="#ca8a04" stroke-width="2.5" transform="rotate(-18,102,68)"/>
+    <ellipse cx="142" cy="72" rx="32" ry="22" fill="#fde047" stroke="#ca8a04" stroke-width="2.5" transform="rotate(15,142,72)"/>
+    <ellipse cx="122" cy="42" rx="10" ry="4" fill="#22c55e" transform="rotate(-20,122,42)"/>
+    <text x="121" y="114" font-family="Fredoka, Arial, sans-serif" font-size="16" font-weight="700" fill="#854d0e" text-anchor="middle">Buah Mangga</text>
+    <!-- Digital screen -->
+    <rect x="34" y="128" width="174" height="44" rx="10" fill="#1e293b"/>
+    <rect x="40" y="134" width="162" height="32" rx="6" fill="#fef9c3"/>
+    <text x="121" y="156" font-family="Courier New, monospace" font-size="19" font-weight="900" fill="#854d0e" text-anchor="middle">1 kg 200 g</text>
+  </g>
+
+  <!-- Right Side: Melon (1.800 g) -->
+  <g transform="translate(292, 18)">
+    <rect width="242" height="190" rx="18" fill="#ffffff" stroke="#e2e8f0" stroke-width="2.5"/>
+    <!-- Melon -->
+    <circle cx="121" cy="66" r="34" fill="#86efac" stroke="#16a34a" stroke-width="2.5"/>
+    <path d="M 96 50 L 146 82 M 96 82 L 146 50 M 121 32 L 121 100 M 87 66 L 155 66" stroke="#22c55e" stroke-width="2" opacity="0.6"/>
+    <path d="M 121 32 L 124 22" stroke="#15803d" stroke-width="3" stroke-linecap="round"/>
+    <text x="121" y="114" font-family="Fredoka, Arial, sans-serif" font-size="16" font-weight="700" fill="#166534" text-anchor="middle">Buah Melon</text>
+    <!-- Digital screen -->
+    <rect x="34" y="128" width="174" height="44" rx="10" fill="#1e293b"/>
+    <rect x="40" y="134" width="162" height="32" rx="6" fill="#dcfce7"/>
+    <text x="121" y="156" font-family="Courier New, monospace" font-size="19" font-weight="900" fill="#166534" text-anchor="middle">1.800 g</text>
+  </g>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 278" role="img" aria-label="Timbangan dapur mengukur tepung seberat 600 gram">
+  <rect width="420" height="278" rx="16" fill="#f8fafc"/>
+  <!-- Flour bag in bowl -->
+  <path d="M 176 70 L 182 32 C 184 26 236 26 238 32 L 244 70 Z" fill="#fef3c7" stroke="#b45309" stroke-width="2.2"/>
+  <text x="210" y="57" font-family="Fredoka, Arial, sans-serif" font-size="13" font-weight="700" fill="#92400e" text-anchor="middle">TEPUNG</text>
+
+  <!-- Tray -->
+  <path d="M 145 68 L 275 68 L 258 90 L 162 90 Z" fill="#e2e8f0" stroke="#475569" stroke-width="2.5" stroke-linejoin="round"/>
+  <rect x="200" y="90" width="20" height="12" fill="#94a3b8" stroke="#475569" stroke-width="2"/>
+
+  <!-- Warm Orange Kitchen Scale Body -->
+  <path d="M 134 102 L 286 102 L 308 256 C 309 262 303 266 297 266 L 123 266 C 117 266 111 262 112 256 Z" fill="#fb923c" stroke="#c2410c" stroke-width="3"/>
+  <circle cx="210" cy="184" r="74" fill="#ffffff" stroke="#9a3412" stroke-width="3"/>
+  <line x1="152.0" y1="217.5" x2="162.4" y2="211.5" stroke="#0f172a" stroke-width="2.6"/>
+  <line x1="143.4" y1="191.0" x2="149.3" y2="190.4" stroke="#64748b" stroke-width="1.4"/>
+  <line x1="146.3" y1="163.3" x2="157.7" y2="167.0" stroke="#0f172a" stroke-width="2.6"/>
+  <line x1="160.2" y1="139.2" x2="164.7" y2="143.2" stroke="#64748b" stroke-width="1.4"/>
+  <line x1="182.7" y1="122.8" x2="187.6" y2="133.8" stroke="#0f172a" stroke-width="2.6"/>
+  <line x1="210.0" y1="117.0" x2="210.0" y2="123.0" stroke="#64748b" stroke-width="1.4"/>
+  <line x1="237.3" y1="122.8" x2="232.4" y2="133.8" stroke="#0f172a" stroke-width="2.6"/>
+  <line x1="259.8" y1="139.2" x2="255.3" y2="143.2" stroke="#64748b" stroke-width="1.4"/>
+  <line x1="273.7" y1="163.3" x2="262.3" y2="167.0" stroke="#0f172a" stroke-width="2.6"/>
+  <line x1="276.6" y1="191.0" x2="270.7" y2="190.4" stroke="#64748b" stroke-width="1.4"/>
+  <line x1="268.0" y1="217.5" x2="257.6" y2="211.5" stroke="#0f172a" stroke-width="2.6"/>
+  <text x="210" y="220" font-family="Fredoka, Arial, sans-serif" font-size="14" font-weight="700" fill="#0284c7" text-anchor="middle">gram</text>
+  <line x1="210" y1="184" x2="232.4" y2="133.8" stroke="#e11d48" stroke-width="3.6" stroke-linecap="round"/>
+  <circle cx="210" cy="184" r="6.5" fill="#1e293b"/>
+  <circle cx="210" cy="184" r="2.8" fill="#facc15"/>
+  <text x="174.5" y="208.5" font-family="Nunito, Arial, sans-serif" font-size="11.5" font-weight="900" fill="#0f172a" stroke="#ffffff" stroke-width="4" paint-order="stroke" text-anchor="middle">0</text>
+  <text x="171.0" y="175.3" font-family="Nunito, Arial, sans-serif" font-size="11.5" font-weight="900" fill="#0f172a" stroke="#ffffff" stroke-width="4" paint-order="stroke" text-anchor="middle">200</text>
+  <text x="193.3" y="150.5" font-family="Nunito, Arial, sans-serif" font-size="11.5" font-weight="900" fill="#0f172a" stroke="#ffffff" stroke-width="4" paint-order="stroke" text-anchor="middle">400</text>
+  <text x="226.7" y="150.5" font-family="Nunito, Arial, sans-serif" font-size="11.5" font-weight="900" fill="#0f172a" stroke="#ffffff" stroke-width="4" paint-order="stroke" text-anchor="middle">600</text>
+  <text x="249.0" y="175.3" font-family="Nunito, Arial, sans-serif" font-size="11.5" font-weight="900" fill="#0f172a" stroke="#ffffff" stroke-width="4" paint-order="stroke" text-anchor="middle">800</text>
+  <text x="245.5" y="208.5" font-family="Nunito, Arial, sans-serif" font-size="11.5" font-weight="900" fill="#0f172a" stroke="#ffffff" stroke-width="4" paint-order="stroke" text-anchor="middle">1000</text>
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 225" role="img" aria-label="Tangga satuan panjang dengan petunjuk kali 10 setiap turun satu tingkat untuk menghitung 4 meter menjadi sentimeter">
+  <rect width="560" height="225" rx="16" fill="#f8fafc"/>
+  <!-- Stairs -->
+  <rect x="30" y="28" width="54" height="24" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/><text x="57" y="45" font-family="Fredoka, Arial, sans-serif" font-size="14" font-weight="700" fill="#334155" text-anchor="middle">km</text><rect x="84" y="52" width="54" height="24" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/><text x="111" y="69" font-family="Fredoka, Arial, sans-serif" font-size="14" font-weight="700" fill="#334155" text-anchor="middle">hm</text><rect x="138" y="76" width="54" height="24" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/><text x="165" y="93" font-family="Fredoka, Arial, sans-serif" font-size="14" font-weight="700" fill="#334155" text-anchor="middle">dam</text><rect x="192" y="100" width="54" height="24" rx="4" fill="#0ea5e9" stroke="#0369a1" stroke-width="2"/><text x="219" y="117" font-family="Fredoka, Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">m</text><rect x="246" y="124" width="54" height="24" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/><text x="273" y="141" font-family="Fredoka, Arial, sans-serif" font-size="14" font-weight="700" fill="#334155" text-anchor="middle">dm</text><rect x="300" y="148" width="54" height="24" rx="4" fill="#f97316" stroke="#c2410c" stroke-width="2"/><text x="327" y="165" font-family="Fredoka, Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">cm</text><rect x="354" y="172" width="54" height="24" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/><text x="381" y="189" font-family="Fredoka, Arial, sans-serif" font-size="14" font-weight="700" fill="#334155" text-anchor="middle">mm</text>
+
+  <!-- Curved jump arrows m -> dm -> cm -->
+  <path d="M 225 94 Q 252 68 274 116" fill="none" stroke="#e11d48" stroke-width="2.5" stroke-dasharray="4,3"/>
+  <text x="255" y="76" font-family="Nunito, Arial, sans-serif" font-size="12" font-weight="800" fill="#e11d48">× 10</text>
+  <path d="M 280 118 Q 308 92 330 140" fill="none" stroke="#e11d48" stroke-width="2.5" stroke-dasharray="4,3"/>
+  <text x="310" y="100" font-family="Nunito, Arial, sans-serif" font-size="12" font-weight="800" fill="#e11d48">× 10</text>
+
+  <!-- Right question panel -->
+  <rect x="380" y="28" width="160" height="100" rx="14" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.5"/>
+  <text x="460" y="56" font-family="Nunito, Arial, sans-serif" font-size="13" font-weight="800" fill="#0369a1" text-anchor="middle">Turun 1 tangga = × 10</text>
+  <rect x="396" y="70" width="128" height="44" rx="10" fill="#ffffff" stroke="#38bdf8" stroke-width="2"/>
+  <text x="460" y="99" font-family="Fredoka, Arial, sans-serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">4 m = ... cm</text>
+</svg>

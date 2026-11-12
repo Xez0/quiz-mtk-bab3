@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 278" role="img" aria-label="Timbangan kue jarum menunjukkan berat buah jeruk tepat di angka 2 kg">
+  <rect width="420" height="278" rx="16" fill="#f8fafc"/>
+  <!-- Cute Oranges in Bowl -->
+  <circle cx="178" cy="54" r="18" fill="#f97316" stroke="#c2410c" stroke-width="2"/>
+  <circle cx="212" cy="48" r="19" fill="#fb923c" stroke="#c2410c" stroke-width="2"/>
+  <circle cx="242" cy="54" r="18" fill="#f97316" stroke="#c2410c" stroke-width="2"/>
+  <circle cx="195" cy="68" r="18" fill="#ea580c" stroke="#9a3412" stroke-width="2"/>
+  <circle cx="228" cy="68" r="18" fill="#f97316" stroke="#c2410c" stroke-width="2"/>
+  <!-- Green leaves -->
+  <ellipse cx="215" cy="27" rx="9" ry="4" fill="#22c55e" transform="rotate(-25,215,27)"/>
+
+  <!-- Silver Weighing Bowl -->
+  <path d="M 142 66 L 278 66 L 260 90 L 160 90 Z" fill="#cbd5e1" stroke="#475569" stroke-width="2.5" stroke-linejoin="round"/>
+  <rect x="200" y="90" width="20" height="12" fill="#94a3b8" stroke="#475569" stroke-width="2"/>
+
+  <!-- Blue Kitchen Scale Body -->
+  <path d="M 134 102 L 286 102 L 308 256 C 309 262 303 266 297 266 L 123 266 C 117 266 111 262 112 256 Z" fill="#38bdf8" stroke="#0284c7" stroke-width="3"/>
+  <circle cx="210" cy="184" r="74" fill="#ffffff" stroke="#0369a1" stroke-width="3"/>
+  <line x1="152.0" y1="217.5" x2="162.4" y2="211.5" stroke="#0f172a" stroke-width="2.6"/>
+  <line x1="143.0" y1="184.0" x2="149.0" y2="184.0" stroke="#64748b" stroke-width="1.4"/>
+  <line x1="152.0" y1="150.5" x2="162.4" y2="156.5" stroke="#0f172a" stroke-width="2.6"/>
+  <line x1="176.5" y1="126.0" x2="179.5" y2="131.2" stroke="#64748b" stroke-width="1.4"/>
+  <line x1="210.0" y1="117.0" x2="210.0" y2="129.0" stroke="#0f172a" stroke-width="2.6"/>
+  <line x1="243.5" y1="126.0" x2="240.5" y2="131.2" stroke="#64748b" stroke-width="1.4"/>
+  <line x1="268.0" y1="150.5" x2="257.6" y2="156.5" stroke="#0f172a" stroke-width="2.6"/>
+  <line x1="277.0" y1="184.0" x2="271.0" y2="184.0" stroke="#64748b" stroke-width="1.4"/>
+  <line x1="268.0" y1="217.5" x2="257.6" y2="211.5" stroke="#0f172a" stroke-width="2.6"/>
+  <text x="210" y="220" font-family="Fredoka, Arial, sans-serif" font-size="14" font-weight="700" fill="#0284c7" text-anchor="middle">kg</text>
+  <line x1="210" y1="184" x2="210.0" y2="129.0" stroke="#e11d48" stroke-width="3.6" stroke-linecap="round"/>
+  <circle cx="210" cy="184" r="6.5" fill="#1e293b"/>
+  <circle cx="210" cy="184" r="2.8" fill="#facc15"/>
+  <text x="174.5" y="208.5" font-family="Nunito, Arial, sans-serif" font-size="14" font-weight="900" fill="#0f172a" stroke="#ffffff" stroke-width="4" paint-order="stroke" text-anchor="middle">0</text>
+  <text x="174.5" y="167.5" font-family="Nunito, Arial, sans-serif" font-size="14" font-weight="900" fill="#0f172a" stroke="#ffffff" stroke-width="4" paint-order="stroke" text-anchor="middle">1</text>
+  <text x="210.0" y="147.0" font-family="Nunito, Arial, sans-serif" font-size="14" font-weight="900" fill="#0f172a" stroke="#ffffff" stroke-width="4" paint-order="stroke" text-anchor="middle">2</text>
+  <text x="245.5" y="167.5" font-family="Nunito, Arial, sans-serif" font-size="14" font-weight="900" fill="#0f172a" stroke="#ffffff" stroke-width="4" paint-order="stroke" text-anchor="middle">3</text>
+  <text x="245.5" y="208.5" font-family="Nunito, Arial, sans-serif" font-size="14" font-weight="900" fill="#0f172a" stroke="#ffffff" stroke-width="4" paint-order="stroke" text-anchor="middle">4</text>
+</svg>

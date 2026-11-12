@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 190" role="img" aria-label="Krayon diletakkan di penggaris dari angka 2 cm sampai 8 cm">
+  <rect width="560" height="190" rx="16" fill="#f8fafc"/>
+  <!-- Guide lines -->
+  <line x1="112" y1="45" x2="112" y2="108" stroke="#0284c7" stroke-width="2.2" stroke-dasharray="5,4"/>
+  <line x1="340" y1="45" x2="340" y2="108" stroke="#0284c7" stroke-width="2.2" stroke-dasharray="5,4"/>
+
+  <!-- Crayon from x=112 to x=340 -->
+  <g transform="translate(0, 48)">
+    <!-- Flat base at x=112 -->
+    <rect x="112" y="4" width="184" height="28" rx="3" fill="#38bdf8" stroke="#0369a1" stroke-width="2"/>
+    <!-- Paper wrapper bands -->
+    <rect x="128" y="4" width="12" height="28" fill="#0f172a" opacity="0.75"/>
+    <rect x="150" y="4" width="118" height="28" fill="#0ea5e9" stroke="#0369a1" stroke-width="1.5"/>
+    <rect x="276" y="4" width="12" height="28" fill="#0f172a" opacity="0.75"/>
+    <!-- Wave decoration -->
+    <path d="M 168 18 Q 182 10 196 18 T 224 18 T 252 18" fill="none" stroke="#e0f2fe" stroke-width="3" stroke-linecap="round"/>
+    <!-- Tip tapering to x=340 -->
+    <polygon points="296,5 340,15 340,21 296,31" fill="#38bdf8" stroke="#0369a1" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Ruler -->
+  <rect x="20" y="108" width="520" height="60" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.5"/>
+  <line x1="36.0" y1="108" x2="36.0" y2="130" stroke="#1e293b" stroke-width="2.2"/>
+    <text x="36.0" y="150" font-family="Nunito, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f172a" text-anchor="middle">0</text>
+    <line x1="55.0" y1="108" x2="55.0" y2="123" stroke="#334155" stroke-width="1.5"/>
+    <line x1="74.0" y1="108" x2="74.0" y2="130" stroke="#1e293b" stroke-width="2.2"/>
+    <text x="74.0" y="150" font-family="Nunito, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f172a" text-anchor="middle">1</text>
+    <line x1="93.0" y1="108" x2="93.0" y2="123" stroke="#334155" stroke-width="1.5"/>
+    <line x1="112.0" y1="108" x2="112.0" y2="130" stroke="#1e293b" stroke-width="2.2"/>
+    <text x="112.0" y="150" font-family="Nunito, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f172a" text-anchor="middle">2</text>
+    <line x1="131.0" y1="108" x2="131.0" y2="123" stroke="#334155" stroke-width="1.5"/>
+    <line x1="150.0" y1="108" x2="150.0" y2="130" stroke="#1e293b" stroke-width="2.2"/>
+    <text x="150.0" y="150" font-family="Nunito, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f172a" text-anchor="middle">3</text>
+    <line x1="169.0" y1="108" x2="169.0" y2="123" stroke="#334155" stroke-width="1.5"/>
+    <line x1="188.0" y1="108" x2="188.0" y2="130" stroke="#1e293b" stroke-width="2.2"/>
+    <text x="188.0" y="150" font-family="Nunito, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f172a" text-anchor="middle">4</text>
+    <line x1="207.0" y1="108" x2="207.0" y2="123" stroke="#334155" stroke-width="1.5"/>
+    <line x1="226.0" y1="108" x2="226.0" y2="130" stroke="#1e293b" stroke-width="2.2"/>
+    <text x="226.0" y="150" font-family="Nunito, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f172a" text-anchor="middle">5</text>
+    <line x1="245.0" y1="108" x2="245.0" y2="123" stroke="#334155" stroke-width="1.5"/>
+    <line x1="264.0" y1="108" x2="264.0" y2="130" stroke="#1e293b" stroke-width="2.2"/>
+    <text x="264.0" y="150" font-family="Nunito, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f172a" text-anchor="middle">6</text>
+    <line x1="283.0" y1="108" x2="283.0" y2="123" stroke="#334155" stroke-width="1.5"/>
+    <line x1="302.0" y1="108" x2="302.0" y2="130" stroke="#1e293b" stroke-width="2.2"/>
+    <text x="302.0" y="150" font-family="Nunito, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f172a" text-anchor="middle">7</text>
+    <line x1="321.0" y1="108" x2="321.0" y2="123" stroke="#334155" stroke-width="1.5"/>
+    <line x1="340.0" y1="108" x2="340.0" y2="130" stroke="#1e293b" stroke-width="2.2"/>
+    <text x="340.0" y="150" font-family="Nunito, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f172a" text-anchor="middle">8</text>
+    <line x1="359.0" y1="108" x2="359.0" y2="123" stroke="#334155" stroke-width="1.5"/>
+    <line x1="378.0" y1="108" x2="378.0" y2="130" stroke="#1e293b" stroke-width="2.2"/>
+    <text x="378.0" y="150" font-family="Nunito, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f172a" text-anchor="middle">9</text>
+    <line x1="397.0" y1="108" x2="397.0" y2="123" stroke="#334155" stroke-width="1.5"/>
+    <line x1="416.0" y1="108" x2="416.0" y2="130" stroke="#1e293b" stroke-width="2.2"/>
+    <text x="416.0" y="150" font-family="Nunito, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f172a" text-anchor="middle">10</text>
+    <line x1="435.0" y1="108" x2="435.0" y2="123" stroke="#334155" stroke-width="1.5"/>
+    <line x1="454.0" y1="108" x2="454.0" y2="130" stroke="#1e293b" stroke-width="2.2"/>
+    <text x="454.0" y="150" font-family="Nunito, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f172a" text-anchor="middle">11</text>
+    <line x1="473.0" y1="108" x2="473.0" y2="123" stroke="#334155" stroke-width="1.5"/>
+    <line x1="492.0" y1="108" x2="492.0" y2="130" stroke="#1e293b" stroke-width="2.2"/>
+    <text x="492.0" y="150" font-family="Nunito, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f172a" text-anchor="middle">12</text>
+  <text x="530" y="150" font-family="Nunito, Arial, sans-serif" font-size="13" font-weight="800" fill="#0369a1" text-anchor="end">cm</text>
+</svg>
