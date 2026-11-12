@@ -23,6 +23,7 @@ class QuizApp {
         this.cachedTeacherSubmissions = [];
         this.pendingCompletedRecord = null;
         this.pendingResumeState = null;
+        this.identityCheckTimer = null;
 
         this.initElements();
         this.bindEvents();
@@ -207,10 +208,10 @@ class QuizApp {
 
         // Teacher Dashboard Actions
         if (this.el.btnExitTeacher) {
-            this.el.btnExitTeacher.addEventListener('click', () => {
+            this.el.btnExitTeacher.addEventListener('click', async () => {
                 window.audioEngine.playClick();
                 this.activeTeacherPin = '';
-                this.showScreen('welcomeScreen');
+                await this.syncAndEvaluateDeviceState();
             });
         }
 
@@ -293,72 +294,63 @@ class QuizApp {
      */
     async initApp() {
         this.updateAudioButtonsUI();
-        this.showScreen('welcomeScreen');
         await this.syncAndEvaluateDeviceState();
     }
 
     /**
-     * Verify completed lock against cloud/local SSoT and evaluate welcome notice state
+     * Strict 1x lock + SSoT sync:
+     * If a completed student session exists on this device, lock directly to Result Screen
+     * (never leaving the name form open for retakes) unless cloud SSoT confirms teacher deleted it.
      */
     async syncAndEvaluateDeviceState() {
         const completedRaw = localStorage.getItem(window.dbManager.STUDENT_COMPLETED_KEY);
         if (completedRaw) {
             try {
                 const completed = JSON.parse(completedRaw);
-                if (completed.nama && completed.kelas) {
-                    const onlineRes = await window.dbManager.checkStudentStatusOnline(completed.nama, completed.kelas);
-                    if (!onlineRes.submitted) {
-                        localStorage.removeItem(window.dbManager.STUDENT_COMPLETED_KEY);
+                if (completed && completed.nama && completed.skor !== undefined) {
+                    // Kunci langsung ke kartu skor siswa bersangkutan (tidak bisa ganti nama / mengulang)
+                    this.pendingCompletedRecord = completed;
+                    this.showExistingResultScreen(completed);
+
+                    // Verifikasi background dengan Google Spreadsheet SSoT (Rekap_Nilai_Bab3)
+                    if (completed.nama && completed.kelas) {
+                        const onlineRes = await window.dbManager.checkStudentStatusOnline(completed.nama, completed.kelas);
+                        if (onlineRes && onlineRes.submitted && onlineRes.data) {
+                            window.dbManager.markStudentCompleted({ ...completed, ...onlineRes.data });
+                            return;
+                        }
+                        if (onlineRes && onlineRes.cloudConfirmedMissing && !onlineRes.submitted) {
+                            // Guru benar-benar menghapus baris siswa ini di Spreadsheet -> buka kunci perangkat
+                            localStorage.removeItem(window.dbManager.STUDENT_COMPLETED_KEY);
+                            const remaining = window.dbManager.getLocalSubmissions().filter((item) => !(
+                                this.normalizeName(item.nama) === this.normalizeName(completed.nama) &&
+                                this.normalizeName(item.kelas) === this.normalizeName(completed.kelas)
+                            ));
+                            localStorage.setItem(window.dbManager.STORAGE_KEY, JSON.stringify(remaining));
+                            this.pendingCompletedRecord = null;
+                            this.showScreen('welcomeScreen');
+                            this.evaluateLocalDeviceNotice();
+                            return;
+                        }
                     }
+                    return;
                 }
             } catch (err) {
-                console.warn('Sinkronisasi status awal dilewati:', err);
+                console.warn('Membaca status selesai lokal gagal:', err);
+                localStorage.removeItem(window.dbManager.STUDENT_COMPLETED_KEY);
             }
         }
 
+        this.showScreen('welcomeScreen');
         this.evaluateLocalDeviceNotice();
     }
 
     /**
-     * Evaluate local completion lock or unfinished quiz progress for crash recovery
+     * Evaluate unfinished quiz progress for crash recovery (when not locked by completed session)
      */
     evaluateLocalDeviceNotice() {
-        const completedRaw = localStorage.getItem(window.dbManager.STUDENT_COMPLETED_KEY);
         const progressRaw = localStorage.getItem(window.dbManager.IN_PROGRESS_KEY);
         const submissions = window.dbManager.getLocalSubmissions();
-
-        // Check completed record first, keeping lock only if still present in SSoT submissions
-        if (completedRaw) {
-            try {
-                const completed = JSON.parse(completedRaw);
-                const matchInDb = submissions.find((item) =>
-                    this.normalizeName(item.nama) === this.normalizeName(completed.nama) &&
-                    this.normalizeName(item.kelas) === this.normalizeName(completed.kelas)
-                );
-
-                if (matchInDb) {
-                    this.pendingCompletedRecord = matchInDb;
-                    if (this.el.studentName && !this.el.studentName.value) {
-                        this.el.studentName.value = matchInDb.nama;
-                    }
-                    if (this.el.studentClass && matchInDb.kelas) {
-                        this.el.studentClass.value = matchInDb.kelas;
-                    }
-                    this.renderWelcomeNotice(
-                        'warning',
-                        `<strong>🔒 Sudah Selesai:</strong> Halo <strong>${this.escapeHtml(matchInDb.nama)}</strong> (Kelas ${this.escapeHtml(matchInDb.kelas)}), kamu sudah menyelesaikan kuis ini dengan nilai <strong>${matchInDb.skor}</strong>. Klik tombol di bawah untuk melihat skormu.`
-                    );
-                    if (this.el.btnStartQuiz) {
-                        this.el.btnStartQuiz.textContent = 'Lihat Nilai Saya 🏆';
-                    }
-                    return;
-                }
-                localStorage.removeItem(window.dbManager.STUDENT_COMPLETED_KEY);
-                this.pendingCompletedRecord = null;
-            } catch (e) {
-                localStorage.removeItem(window.dbManager.STUDENT_COMPLETED_KEY);
-            }
-        }
 
         // Check crash recovery / auto-resume progress
         if (progressRaw) {
@@ -384,9 +376,10 @@ class QuizApp {
                         const total = saved.questionQueue.length;
                         this.renderWelcomeNotice(
                             'info',
-                            `<strong>📌 Progres Tersimpan:</strong> Kuis <strong>${this.escapeHtml(saved.studentName)}</strong> (Kelas ${this.escapeHtml(saved.studentClass)}) berhenti pada <strong>Soal ${soalKe} dari ${total}</strong>. Klik Mulai untuk melanjutkan.`
+                            `<strong>📌 Progres Tersimpan:</strong> Kuis <strong>${this.escapeHtml(saved.studentName)}</strong> (Kelas ${this.escapeHtml(saved.studentClass)}) berhenti pada <strong>Soal ${soalKe} dari ${total}</strong>. Klik Lanjutkan untuk meneruskan.`
                         );
                         if (this.el.btnStartQuiz) {
+                            this.el.btnStartQuiz.disabled = false;
                             this.el.btnStartQuiz.textContent = `Lanjutkan Soal ${soalKe} 🚀`;
                         }
                         return;
@@ -401,14 +394,15 @@ class QuizApp {
     }
 
     /**
-     * Re-evaluate welcome notice state when student edits name or class fields
+     * Re-evaluate submission eligibility (local + live cloud SSoT) when student edits name or class
      */
     onIdentityFieldChange() {
         const nama = (this.el.studentName ? this.el.studentName.value : '').trim();
         const kelas = (this.el.studentClass ? this.el.studentClass.value : '').trim();
 
         if (!nama || !kelas) {
-            if (!this.pendingCompletedRecord && !this.pendingResumeState) {
+            if (this.el.btnStartQuiz) this.el.btnStartQuiz.disabled = false;
+            if (!this.pendingResumeState) {
                 this.clearWelcomeNotice();
             }
             return;
@@ -416,18 +410,11 @@ class QuizApp {
 
         const localCheck = window.dbManager.isAlreadySubmitted(nama, kelas);
         if (localCheck && localCheck.submitted && localCheck.data) {
-            const matchDone = localCheck.data;
-            this.pendingCompletedRecord = matchDone;
-            this.renderWelcomeNotice(
-                'warning',
-                `<strong>🔒 Sudah Selesai:</strong> <strong>${this.escapeHtml(matchDone.nama)}</strong> (Kelas ${this.escapeHtml(matchDone.kelas)}) sudah mengerjakan kuis ini dengan nilai <strong>${matchDone.skor}</strong>.`
-            );
-            if (this.el.btnStartQuiz) {
-                this.el.btnStartQuiz.textContent = 'Lihat Nilai Saya 🏆';
-            }
+            this.applyLockedIdentityNotice(localCheck.data);
             return;
         }
 
+        // Cek progres belum selesai
         this.pendingCompletedRecord = null;
         if (this.pendingResumeState &&
             this.normalizeName(this.pendingResumeState.studentName) === this.normalizeName(nama) &&
@@ -439,12 +426,56 @@ class QuizApp {
                 `<strong>📌 Progres Tersimpan:</strong> Melanjutkan pengerjaan <strong>${this.escapeHtml(nama)}</strong> dari <strong>Soal ${soalKe} dari ${total}</strong>.`
             );
             if (this.el.btnStartQuiz) {
+                this.el.btnStartQuiz.disabled = false;
                 this.el.btnStartQuiz.textContent = `Lanjutkan Soal ${soalKe} 🚀`;
             }
-            return;
+        } else {
+            this.clearWelcomeNotice();
         }
 
-        this.clearWelcomeNotice();
+        // Cek live ke Google Spreadsheet (debounce 350ms) untuk mencegah siswa sama mengerjakan ulang dari HP/browser lain
+        if (this.identityCheckTimer) clearTimeout(this.identityCheckTimer);
+        this.identityCheckTimer = setTimeout(async () => {
+            try {
+                const liveCheck = await window.dbManager.checkStudentStatusOnline(nama, kelas);
+                const latestNama = (this.el.studentName ? this.el.studentName.value : '').trim();
+                const latestKelas = (this.el.studentClass ? this.el.studentClass.value : '').trim();
+                if (this.normalizeName(latestNama) === this.normalizeName(nama) &&
+                    this.normalizeName(latestKelas) === this.normalizeName(kelas) &&
+                    liveCheck && liveCheck.submitted && liveCheck.data) {
+                    window.dbManager.markStudentCompleted(liveCheck.data);
+                    this.applyLockedIdentityNotice(liveCheck.data);
+                }
+            } catch (e) {}
+        }, 350);
+    }
+
+    applyLockedIdentityNotice(record) {
+        this.pendingCompletedRecord = record;
+        if (!this.el.alreadyNotice) return;
+
+        this.el.alreadyNotice.className = 'alert-box alert-warning';
+        this.el.alreadyNotice.innerHTML = `
+            <strong>⚠️ Kamu Sudah Mengerjakan!</strong><br/>
+            Halo <strong>${this.escapeHtml(record.nama)}</strong> (Kelas ${this.escapeHtml(record.kelas)}), kamu sudah menyelesaikan kuis ini dengan nilai <strong>${record.skor}</strong>.<br/>
+            <small>Sesuai aturan ujian, setiap siswa hanya dapat mengerjakan 1 kali saja.</small>
+            <div style="margin-top: 10px;">
+                <button type="button" class="btn-chunky btn-primary btn-sm" id="btn-view-my-score">
+                    Lihat Nilai Saya 🏆
+                </button>
+            </div>
+        `;
+        if (this.el.btnStartQuiz) {
+            this.el.btnStartQuiz.disabled = true;
+            this.el.btnStartQuiz.textContent = 'Sudah Mengerjakan (Terkunci 🔒)';
+        }
+        const btnView = document.getElementById('btn-view-my-score');
+        if (btnView) {
+            btnView.addEventListener('click', () => {
+                window.audioEngine.playClick();
+                this.showExistingResultScreen(record);
+            });
+        }
     }
 
     renderWelcomeNotice(variant, htmlMessage) {
@@ -459,6 +490,7 @@ class QuizApp {
             this.el.alreadyNotice.innerHTML = '';
         }
         if (this.el.btnStartQuiz) {
+            this.el.btnStartQuiz.disabled = false;
             this.el.btnStartQuiz.textContent = 'Mulai Kuis Sekarang 🚀';
         }
     }
@@ -490,6 +522,12 @@ class QuizApp {
             const onlineStatus = await window.dbManager.checkStudentStatusOnline(nama, kelas);
             if (onlineStatus && onlineStatus.submitted && onlineStatus.data) {
                 existingRecord = onlineStatus.data;
+            } else {
+                const localFallback = window.dbManager.isAlreadySubmitted(nama, kelas);
+                if (localFallback && localFallback.submitted && localFallback.data &&
+                    !(onlineStatus && onlineStatus.cloudConfirmedMissing)) {
+                    existingRecord = localFallback.data;
+                }
             }
 
             if (existingRecord) {
@@ -526,11 +564,16 @@ class QuizApp {
 
     setStartButtonLoading(isLoading, label) {
         if (!this.el.btnStartQuiz) return;
-        this.el.btnStartQuiz.disabled = isLoading;
-        if (isLoading && label) {
-            this.el.btnStartQuiz.textContent = label;
-        } else if (!isLoading) {
-            this.onIdentityFieldChange();
+        if (isLoading) {
+            this._savedStartLabel = this.el.btnStartQuiz.textContent;
+            this.el.btnStartQuiz.disabled = true;
+            if (label) this.el.btnStartQuiz.textContent = label;
+        } else {
+            this.el.btnStartQuiz.disabled = Boolean(this.pendingCompletedRecord);
+            if (this._savedStartLabel) {
+                this.el.btnStartQuiz.textContent = this._savedStartLabel;
+                this._savedStartLabel = '';
+            }
         }
     }
 

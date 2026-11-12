@@ -74,6 +74,19 @@ class DatabaseManager {
     const cleanKelas = (kelas || '').trim();
     if (!cleanNama) return { submitted: false };
 
+    const localCheck = this.isAlreadySubmitted(cleanNama, cleanKelas);
+    let sessionSubmittedAt = 0;
+    const sessionStr = localStorage.getItem(this.STUDENT_COMPLETED_KEY);
+    if (sessionStr) {
+      try {
+        const parsed = JSON.parse(sessionStr);
+        if ((parsed.nama || '').trim().toLowerCase() === cleanNama.toLowerCase() &&
+            (parsed.kelas || '').trim().toUpperCase() === cleanKelas.toUpperCase()) {
+          sessionSubmittedAt = Number(parsed.submittedAt) || 0;
+        }
+      } catch (e) {}
+    }
+
     if (this.gasUrl && this.gasUrl.startsWith('https://script.google.com')) {
       try {
         const url = `${this.gasUrl}?action=checkStudent&sheet=${encodeURIComponent(this.TARGET_SHEET)}&quiz=bab3&nama=${encodeURIComponent(cleanNama)}&kelas=${encodeURIComponent(cleanKelas)}&_t=${Date.now()}`;
@@ -81,12 +94,16 @@ class DatabaseManager {
         if (res.ok) {
           const json = await res.json();
           if (json.success) {
-            // Pastikan hanya membaca status dari tab Bab 3 jika server mengirim metadata sheet
-            if (json.sheet && json.sheet !== this.TARGET_SHEET) {
-              return this.isAlreadySubmitted(cleanNama, cleanKelas);
+            // Hanya percaya status cloud jika server benar-benar merespons dari tab Rekap_Nilai_Bab3
+            if (json.sheet !== this.TARGET_SHEET) {
+              return localCheck;
             }
             if (!json.exists) {
-              const sessionStr = localStorage.getItem(this.STUDENT_COMPLETED_KEY);
+              // Beri jeda aman 12 detik agar POST no-cors sempat tertulis ke Spreadsheet sebelum membatalkan kunci
+              const recentlySubmitted = sessionSubmittedAt > 0 && (Date.now() - sessionSubmittedAt) < 12000;
+              if (recentlySubmitted && localCheck.submitted) {
+                return localCheck;
+              }
               if (sessionStr) {
                 try {
                   const parsed = JSON.parse(sessionStr);
@@ -95,12 +112,8 @@ class DatabaseManager {
                   }
                 } catch (e) {}
               }
-              return { submitted: false };
+              return { submitted: false, cloudConfirmedMissing: true };
             } else {
-              // Cegah false lock jika backend belum diperbarui ke multi-tab
-              if (json.data && String(json.data.id || '').startsWith('SUB-') && typeof json.data.subBab1Skor === 'undefined') {
-                return this.isAlreadySubmitted(cleanNama, cleanKelas);
-              }
               return { submitted: true, data: json.data };
             }
           }
@@ -110,7 +123,7 @@ class DatabaseManager {
       }
     }
 
-    return this.isAlreadySubmitted(cleanNama, cleanKelas);
+    return localCheck;
   }
 
   markStudentCompleted(submissionData) {
@@ -118,6 +131,7 @@ class DatabaseManager {
     const cleanKelas = submissionData.kelas.trim().toUpperCase();
     const payload = {
       key: `${cleanNama}_${cleanKelas}`,
+      submittedAt: submissionData.submittedAt || Date.now(),
       ...submissionData
     };
     localStorage.setItem(this.STUDENT_COMPLETED_KEY, JSON.stringify(payload));
@@ -128,8 +142,12 @@ class DatabaseManager {
   // ==========================================
 
   async submitQuizResult(resultData) {
-    this.saveToLocal(resultData);
-    this.markStudentCompleted(resultData);
+    const recordToSave = {
+      submittedAt: Date.now(),
+      ...resultData
+    };
+    this.saveToLocal(recordToSave);
+    this.markStudentCompleted(recordToSave);
 
     if (this.gasUrl && this.gasUrl.startsWith('https://script.google.com')) {
       try {
